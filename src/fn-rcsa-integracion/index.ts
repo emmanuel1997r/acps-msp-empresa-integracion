@@ -1,12 +1,6 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import {
-  badRequest,
-  notFound,
-  okey,
-  serverError,
-} from "../shared/utils/httpResponses";
-import { ArchivoNegativoIntegracionRequest } from "./schema";
-import { mockArchivoNegativo } from "../mocks/archivo-negativo-mock";
+import { badRequest, okey, serverError } from "../shared/utils/httpResponses";
+import { RCSAIntegracionRequest } from "./schema";
 
 export const handler = async (
   event: APIGatewayProxyEvent,
@@ -16,20 +10,13 @@ export const handler = async (
       return badRequest("Cuerpo de la solicitud vacío");
     }
 
-    const parsed = ArchivoNegativoIntegracionRequest.safeParse(JSON.parse(event.body));
+    const parsed = RCSAIntegracionRequest.safeParse(JSON.parse(event.body));
 
     if (!parsed.success) {
       return badRequest("Datos de entrada inválidos");
     }
 
-    const { numeroIdentificacion } = parsed.data;
-    const response = mockArchivoNegativo[numeroIdentificacion];
-
-    if (!response) {
-      return notFound();
-    }
-
-    return okey("Consulta exitosa", response);
+    return okey("Consulta exitosa");
   } catch (error) {
     console.error("Error:", error);
     return serverError("Error interno del servidor");

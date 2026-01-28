@@ -1,27 +1,65 @@
 import { z } from "zod";
 
-// HU7 - Archivo Negativo Integration Request
-export const ArchivoNegativoIntegracionRequest = z.object({
-  tipoIdentificacion: z.string(),
-  numeroIdentificacion: z.string(),
-  usuario: z.string(),
-  canal: z.string(),
+// RCSA Integration Request
+export const RCSAIntegracionRequest = z.object({
+  // Cliente Empresa
+  clienteEmpresa: z.object({
+    tipoBusqueda: z.string(),
+    tipoVerificacion: z.string(),
+    tipoIdentificacion: z.string(),
+    numeroIdentificacion: z.string(),
+    compania: z.string(), // Razón Social
+    nacionalidad: z.string(),
+    codigoActividadEconomica: z.string(),
+    tipoEmpresa: z.string(),
+  }),
+
+  // Legal – Nombramiento / Firmante
+  legalFirmante: z.object({
+    tipoBusqueda: z.string(),
+    tipoVerificacion: z.string(),
+    tipoIdentificacion: z.string(),
+    numeroIdentificacion: z.string(),
+    nombres: z.string(),
+    apellidos: z.string(),
+    nacionalidad: z.string(),
+  }),
+
+  // Accionista/Beneficiario Final
+  accionistaBeneficiario: z.object({
+    tipoBusqueda: z.string(),
+    tipoVerificacion: z.string(),
+    tipoIdentificacion: z.string(),
+    numeroIdentificacion: z.string(),
+    compania: z.string().optional(), // Razón Social
+    nombres: z.string().optional(),
+    apellidos: z.string().optional(),
+    nacionalidad: z.string(),
+  }),
+
+  // Datos del sistema
+  datosDelSistema: z.object({
+    usuario: z.string(),
+    canal: z.string(),
+  }),
 });
 
-// HU7 - Archivo Negativo Integration Response
-export const ArchivoNegativoIntegracionResponse = z.object({
-  tipoIdentificacion: z.string(),
-  numeroIdentificacion: z.string(),
-  cantidadCoincidencias: z.number(),
-  detalleCoincidencias: z.array(z.object({
-    tipoArchivo: z.string(),
-    fechaIngreso: z.string(),
-    motivo: z.string(),
-    estado: z.string(),
-    observaciones: z.string().optional(),
-    fechaVencimiento: z.string().optional(),
-  })),
+// RCSA Integration Response
+export const RCSAIntegracionResponse = z.object({
+  datosDelSistema: z.object({
+    tipoIdentificacion: z.string(),
+    numeroIdentificacion: z.string(),
+    cantidadCoincidencias: z.number(),
+    detalleCoincidencias: z.array(z.object({
+      tipoLista: z.string(),
+      fechaDeteccion: z.string(),
+      nivelRiesgo: z.string(),
+      estado: z.string(),
+      observaciones: z.string().optional(),
+      fechaActualizacion: z.string().optional(),
+    })),
+  }),
 });
 
-export type ArchivoNegativoIntegracionRequest = z.infer<typeof ArchivoNegativoIntegracionRequest>;
-export type ArchivoNegativoIntegracionResponse = z.infer<typeof ArchivoNegativoIntegracionResponse>;
+export type RCSAIntegracionRequest = z.infer<typeof RCSAIntegracionRequest>;
+export type RCSAIntegracionResponse = z.infer<typeof RCSAIntegracionResponse>;

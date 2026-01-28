@@ -11,11 +11,11 @@ plugins:
   - serverless-offline
 
 functions:
-  rcsaIntegracion:
-    handler: src/fn-rcsa-integracion/index.handler
+  archivonegativoIntegracion:
+    handler: src/fn-archivonegativo-integracion/index.handler
     events:
       - http:
-          path: /empresa/rcsa-integracion
+          path: /empresa/archivonegativo-integracion
           method: POST
           cors: true
 
@@ -24,6 +24,14 @@ functions:
     events:
       - http:
           path: /empresa/bpm-integracion
+          method: POST
+          cors: true
+  
+  rcsaIntegracion:
+    handler: src/fn-rcsa-integracion/index.handler
+    events:
+      - http:
+          path: /empresa/rcsa-integracion
           method: POST
           cors: true
 

@@ -1,4 +1,4 @@
-import { ArchivoNegativoIntegracionResponse } from '../fn-rcsa-integracion/schema';
+import { ArchivoNegativoIntegracionResponse } from '../fn-archivonegativo-integracion/schema';
 
 export const mockArchivoNegativo: Record<string, ArchivoNegativoIntegracionResponse> = {
   "12345678": {
