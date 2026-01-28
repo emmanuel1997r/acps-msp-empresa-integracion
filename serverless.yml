@@ -26,7 +26,15 @@ functions:
           path: /empresa/bpm-integracion
           method: POST
           cors: true
-  
+
+  bpm-sincronizacion:
+    handler: src/fn-bpm-sincronizacion/index.handler
+    events:
+      - http:
+          path: /empresa/bpm-sincronizacion
+          method: POST
+          cors: true
+
   rcsaIntegracion:
     handler: src/fn-rcsa-integracion/index.handler
     events:
