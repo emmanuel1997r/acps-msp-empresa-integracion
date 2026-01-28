@@ -11,11 +11,19 @@ plugins:
   - serverless-offline
 
 functions:
-  empresaActualizar:
+  rcsaIntegracion:
     handler: src/fn-rcsa-integracion/index.handler
     events:
       - http:
           path: /empresa/rcsa-integracion
+          method: POST
+          cors: true
+
+  bmpIntegracionCreacion:
+    handler: src/fn-bpm-integracion-creacion/index.handler
+    events:
+      - http:
+          path: /empresa/bpm-integracion
           method: POST
           cors: true
 
