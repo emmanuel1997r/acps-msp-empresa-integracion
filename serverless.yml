@@ -20,7 +20,7 @@ functions:
           cors: true
 
   bmpIntegracionCreacion:
-    handler: src/fn-bpm-integracion-creacion/index.handler
+    handler: src/functions/bpmIntegracionCreacion.handler
     events:
       - http:
           path: /empresa/bpm-integracion
@@ -28,7 +28,7 @@ functions:
           cors: true
 
   bpm-sincronizacion:
-    handler: src/fn-bpm-sincronizacion/index.handler
+    handler: src/functions/bpmSincronizacion.handler
     events:
       - http:
           path: /empresa/bpm-sincronizacion
@@ -36,7 +36,7 @@ functions:
           cors: true
 
   rcsaIntegracion:
-    handler: src/fn-rcsa-integracion/index.handler
+    handler: src/functions/rcsaIntegracion.handler
     events:
       - http:
           path: /empresa/rcsa-integracion
