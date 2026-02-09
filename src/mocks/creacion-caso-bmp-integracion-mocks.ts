@@ -1,4 +1,7 @@
-import { CreacionCasoEmpresaRequest, CreacionCasoEmpresaResponse } from '../fn-bpm-integracion-creacion/schema';
+import {
+  CreacionCasoEmpresaRequest,
+  CreacionCasoEmpresaResponse,
+} from "../schemas/schemaBpmIntegracionCreacion.js";
 
 // Mock 1: Caso exitoso completo con chequera y firmantes
 export const mockCasoExitosoCompleto: {
@@ -19,12 +22,12 @@ export const mockCasoExitosoCompleto: {
     firmantes: [
       {
         tipoIdentificacionFirmante: "DNI",
-        numeroIdentificacionFirmante: "12345678"
+        numeroIdentificacionFirmante: "12345678",
       },
       {
-        tipoIdentificacionFirmante: "DNI", 
-        numeroIdentificacionFirmante: "87654321"
-      }
+        tipoIdentificacionFirmante: "DNI",
+        numeroIdentificacionFirmante: "87654321",
+      },
     ],
     depositoInicial: 500,
     solicitaChequera: true,
@@ -38,22 +41,22 @@ export const mockCasoExitosoCompleto: {
     envioEstadoCuentaDigital: true,
     correoElectronico: "contabilidad@tecnologiasac.com",
     representanteLegal: {
-      poseeDireccionExterior: false
+      poseeDireccionExterior: false,
     },
     firmanteDireccionExterior: {
-      poseeDireccionExterior: false
+      poseeDireccionExterior: false,
     },
     datosDelSistema: {
       usuario: "operador@banco.com",
-      canal: "WEB"
-    }
+      canal: "WEB",
+    },
   },
   response: {
     datosDelSistema: {
       resultado: "Ok",
-      idBPM: "BPM-2026-001234"
-    }
-  }
+      idBPM: "BPM-2026-001234",
+    },
+  },
 };
 
 // Mock 2: Caso exitoso básico sin chequera ni firmantes
@@ -75,22 +78,22 @@ export const mockCasoExitosoBasico: {
     envioEstadoCuentaDigital: false,
     numeroDireccion: "AV. LIMA 123, SAN ISIDRO",
     representanteLegal: {
-      poseeDireccionExterior: false
+      poseeDireccionExterior: false,
     },
     firmanteDireccionExterior: {
-      poseeDireccionExterior: false
+      poseeDireccionExterior: false,
     },
     datosDelSistema: {
       usuario: "asesor@banco.com",
-      canal: "MOBILE"
-    }
+      canal: "MOBILE",
+    },
   },
   response: {
     datosDelSistema: {
       resultado: "Ok",
-      idBPM: "BPM-2026-001235"
-    }
-  }
+      idBPM: "BPM-2026-001235",
+    },
+  },
 };
 
 // Mock 3: Caso con representante legal en el exterior
@@ -122,24 +125,24 @@ export const mockCasoRepresentanteExterior: {
     representanteLegal: {
       poseeDireccionExterior: true,
       tipoIdentificacion: "PASAPORTE",
-      numeroIdentificacion: "P123456789"
+      numeroIdentificacion: "P123456789",
     },
     firmanteDireccionExterior: {
       poseeDireccionExterior: true,
       tipoIdentificacion: "CE",
-      numeroIdentificacion: "001234567"
+      numeroIdentificacion: "001234567",
     },
     datosDelSistema: {
       usuario: "ejecutivo@banco.com",
-      canal: "API"
-    }
+      canal: "API",
+    },
   },
   response: {
     datosDelSistema: {
       resultado: "Ok",
-      idBPM: "BPM-2026-001236"
-    }
-  }
+      idBPM: "BPM-2026-001236",
+    },
+  },
 };
 
 // Mock 4: Caso con error - RUC duplicado
@@ -162,23 +165,25 @@ export const mockCasoErrorRUCDuplicado: {
     envioEstadoCuentaDigital: true,
     correoElectronico: "admin@empresa.com",
     representanteLegal: {
-      poseeDireccionExterior: false
+      poseeDireccionExterior: false,
     },
     firmanteDireccionExterior: {
-      poseeDireccionExterior: false
+      poseeDireccionExterior: false,
     },
     datosDelSistema: {
       usuario: "operador@banco.com",
-      canal: "WEB"
-    }
+      canal: "WEB",
+    },
   },
   response: {
     datosDelSistema: {
       resultado: "Error",
       codigoError: 409,
-      detalleErrores: ["El RUC 20111222333 ya posee una cuenta activa en el sistema"]
-    }
-  }
+      detalleErrores: [
+        "El RUC 20111222333 ya posee una cuenta activa en el sistema",
+      ],
+    },
+  },
 };
 
 // Mock 5: Caso con múltiples errores de validación
@@ -208,15 +213,15 @@ export const mockCasoErroresValidacion: {
     envioEstadoCuentaDigital: true,
     correoElectronico: "test@empresa.com",
     representanteLegal: {
-      poseeDireccionExterior: false
+      poseeDireccionExterior: false,
     },
     firmanteDireccionExterior: {
-      poseeDireccionExterior: false
+      poseeDireccionExterior: false,
     },
     datosDelSistema: {
       usuario: "test@banco.com",
-      canal: "WEB"
-    }
+      canal: "WEB",
+    },
   },
   response: {
     datosDelSistema: {
@@ -225,8 +230,8 @@ export const mockCasoErroresValidacion: {
       detalleErrores: [
         "El depósito inicial debe ser mayor a S/. 500.00 para cuentas empresariales",
         "La fecha de constitución no puede ser futura",
-        "El RUC no está registrado en SUNAT"
-      ]
-    }
-  }
+        "El RUC no está registrado en SUNAT",
+      ],
+    },
+  },
 };

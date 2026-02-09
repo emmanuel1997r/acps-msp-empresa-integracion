@@ -4,7 +4,7 @@ import {
   okey,
   serverError,
 } from "../shared/utils/httpResponses";
-import { BPMSincronizacionRequest } from "./schema";
+import { BPMSincronizacionRequest } from "../schemas/schemaBpmSincronizacion";
 
 export const handler = async (
   event: APIGatewayProxyEvent,

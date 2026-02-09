@@ -1,10 +1,7 @@
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import {
-  badRequest,
-  okey,
-  serverError,
-} from "../shared/utils/httpResponses";
-import { CreacionCasoEmpresaRequest } from "./schema";
+import { badRequest, okey, serverError } from "../shared/utils/httpResponses";
+import { RCSAIntegracionRequest } from "../schemas/schemaRcsaIntegracion.ts";
+
 export const handler = async (
   event: APIGatewayProxyEvent,
 ): Promise<APIGatewayProxyResult> => {
@@ -13,7 +10,7 @@ export const handler = async (
       return badRequest("Cuerpo de la solicitud vacío");
     }
 
-    const parsed = CreacionCasoEmpresaRequest.safeParse(JSON.parse(event.body));
+    const parsed = RCSAIntegracionRequest.safeParse(JSON.parse(event.body));
 
     if (!parsed.success) {
       return badRequest("Datos de entrada inválidos");
