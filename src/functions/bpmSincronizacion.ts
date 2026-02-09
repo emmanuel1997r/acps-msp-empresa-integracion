@@ -5,6 +5,7 @@ import {
   serverError,
 } from "../shared/utils/httpResponses";
 import { BPMSincronizacionRequest } from "../schemas/schemaBpmSincronizacion";
+import { mockBpmSincronizacion } from "../mocks/bpm-sincronizacion-mock";
 
 export const handler = async (
   event: APIGatewayProxyEvent,
@@ -22,15 +23,26 @@ export const handler = async (
 
     const { trazabilidadBPM } = parsed.data;
 
-    // Simular respuesta exitosa
-    const response = {
-      datosDelSistema: {
-        resultado: "Ok" as const,
-        idBPM: trazabilidadBPM.idBPM
-      }
+    const resultado = mockBpmSincronizacion[trazabilidadBPM.idBPM] || {
+      resultado: "Error",
+      codigoError: 404,
+      detalleErrores: ["El ID BPM no fue encontrado"]
     };
 
-    return okey("Sincronización BPM exitosa", response);
+    console.log("Resultado de sincronización:", resultado);
+
+    if (resultado.resultado === "Error") {
+      return {
+        statusCode: resultado.codigoError,
+        body: JSON.stringify({
+          code: resultado.codigoError,
+          description: "Error en sincronización",
+          data: { datosDelSistema: resultado }
+        })
+      };
+    }
+
+    return okey("Sincronización BPM exitosa", { datosDelSistema: resultado });
   } catch (error) {
     console.error("Error:", error);
     return serverError("Error interno del servidor");

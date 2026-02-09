@@ -15,7 +15,7 @@ export const handler = async (
       return badRequest("Datos de entrada inválidos");
     }
 
-    return okey("Consulta exitosa");
+    return okey("Creacion exitosa");
   } catch (error) {
     console.error("Error:", error);
     return serverError("Error interno del servidor");
