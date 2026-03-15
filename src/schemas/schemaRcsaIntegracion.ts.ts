@@ -7,7 +7,7 @@ export const RCSAIntegracionRequest = z.object({
     tipoBusqueda: z.string(),
     tipoVerificacion: z.string(),
     tipoIdentificacion: z.string(),
-    numeroIdentificacion: z.string(),
+    numeroIdentificacion: z.string(),  //Numerico
     compania: z.string(), // Razón Social
     nacionalidad: z.string(),
     codigoActividadEconomica: z.string(),
@@ -19,7 +19,7 @@ export const RCSAIntegracionRequest = z.object({
     tipoBusqueda: z.string(),
     tipoVerificacion: z.string(),
     tipoIdentificacion: z.string(),
-    numeroIdentificacion: z.string(),
+    numeroIdentificacion: z.string(), //Numerico
     nombres: z.string(),
     apellidos: z.string(),
     nacionalidad: z.string(),
@@ -30,7 +30,7 @@ export const RCSAIntegracionRequest = z.object({
     tipoBusqueda: z.string(),
     tipoVerificacion: z.string(),
     tipoIdentificacion: z.string(),
-    numeroIdentificacion: z.string(),
+    numeroIdentificacion: z.string(), //Numerico
     compania: z.string().optional(), // Razón Social
     nombres: z.string().optional(),
     apellidos: z.string().optional(),
