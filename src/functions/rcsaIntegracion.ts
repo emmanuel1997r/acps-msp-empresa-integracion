@@ -44,7 +44,7 @@ export const handler = async (
         totalCoincidencias += hallazgo.cantidadCoincidencias;
         todosLosDetalles = [...todosLosDetalles, ...hallazgo.detalleCoincidencias];
       }
-      console.log("*******************************************");
+      console.log("******************************************666*");
       console.log("Los Id del moks: ", hallazgo);
     });
 
