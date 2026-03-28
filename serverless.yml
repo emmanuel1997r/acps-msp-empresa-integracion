@@ -43,6 +43,30 @@ functions:
           method: POST
           cors: true
 
+  notificacionLatinia:
+    handler: src/functions/documentosClientes.handler 
+    events:
+      - http:
+          path: /empresa/notificacion-latinia
+          method: POST
+          cors: true        
+
+  notificacionCliente:
+      handler: src/functions/notificacionCliente.handler
+      events:
+        - http:
+            path: /empresa/notificacion-cliente
+            method: POST
+            cors: true
+
+  vdmCondocalm:
+      handler: src/functions/vdmCondocalm.handler
+      events:
+        - http:
+            path: /empresa/vdm-Condocalm
+            method: POST
+            cors: true
+
 custom:
   serverless-offline:
     httpPort: 3001

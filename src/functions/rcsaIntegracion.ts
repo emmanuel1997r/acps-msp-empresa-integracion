@@ -14,6 +14,7 @@ export const handler = async (
     const parsed = RCSAIntegracionRequest.safeParse(JSON.parse(event.body));
     console.log("Parsed Request:", parsed);
     if (!parsed.success) {
+      console.error("Trazabilidad: Formato de identificación inválido [Escenario 5]");
       return badRequest("Datos de entrada inválidos");
     }
     const data = parsed.data;
@@ -35,6 +36,7 @@ export const handler = async (
     // 2. Buscar y consolidar
     let totalCoincidencias = 0;
     let todosLosDetalles: any[] = [];
+    let tieneCamposVacios = false;
 
     console.log("****************************");
     console.log("ARREGLO" , idsABuscar);
@@ -43,8 +45,19 @@ export const handler = async (
       if (hallazgo) {
         totalCoincidencias += hallazgo.cantidadCoincidencias;
         todosLosDetalles = [...todosLosDetalles, ...hallazgo.detalleCoincidencias];
+
+        // Lógica para Escenario 3: Detectar si faltan campos en el detalle
+        const incompleto = hallazgo.detalleCoincidencias.some((det: any) => {
+          return (
+            !det.tipoLista || det.tipoLista.trim() === "" ||
+            !det.nivelRiesgo || det.nivelRiesgo.trim() === "" ||
+            !det.estado || det.estado.trim() === "" ||
+            !det.observaciones || det.observaciones.trim() === ""
+          );
+        });
+        if (incompleto) tieneCamposVacios = true;
       }
-      console.log("******************************************666888*");
+      console.log("*******************************************");
       console.log("Los Id del moks: ", hallazgo);
     });
 
@@ -56,17 +69,23 @@ export const handler = async (
       cantidadCoincidencias: totalCoincidencias,
       detalleCoincidencias: todosLosDetalles
     };
+
+    // Escenario 3: Datos incompletos o parciales
+    if (tieneCamposVacios) {
+      console.log("Trazabilidad: Respuesta parcial detectada [Escenario 3]");
+      return okey("Respuesta parcial - Datos incompletos", respuestaConsolidada);
+    }
     
     // Escenario 2: Existen coincidencias
     //return okey("Consulta exitosa", respuestaConsolidada);
     // Escenario 2: Existen coincidencias
     if (totalCoincidencias > 0) {
-      console.log("Trazabilidad: Coincidencias encontradas. Enviando a UDC.");
+      console.log("Trazabilidad: Coincidencias encontradas. Enviando a UDC. [Escenario 2]");
       return okey("Consulta exitosa", respuestaConsolidada);
     } 
     
     // Escenario 1: No existen coincidencias (Por defecto si llega aquí es 0)
-    console.log("Trazabilidad: Sin coincidencias.");
+    console.log("Trazabilidad: Sin coincidencias encontradas [Escenario 1].");
     return okey("Sin coincidencias", { 
       tipoIdentificacion: data.clienteEmpresa.tipoIdentificacion,
         numeroIdentificacion: data.clienteEmpresa.numeroIdentificacion,
@@ -75,7 +94,7 @@ export const handler = async (
     });
 
   } catch (error) {
-    console.error("Error:", error);
-    return serverError("Error interno del servidor");
+    console.error("Trazabilidad: Error técnico registrado [Escenario 4]:", error);
+    return serverError("Error técnico del servicio");
   }
 };
